@@ -1,0 +1,7 @@
+{
+  "name": "FormResetBug",
+  "short_name": "FormResetBug",
+  "description": "HTML Form reset bug reproduce element",
+  "start_url": "/",
+  "display": "standalone"
+}
