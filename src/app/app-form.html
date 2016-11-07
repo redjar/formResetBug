@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+
+<dom-module id="app-form">
+	<template>
+		<!-- Description and instructions -->
+		<h2>Form reset bug reproduce element</h2>
+		<p>
+			This element reproduces HTML form <b>reset()</b> function bug. Please follow instruction to reproduce this
+			bug.
+		</p>
+		<p>Instructions:</p>
+		<ol>
+			<li>Click "SET VALUE" button to set random number to input value</li>
+			<li>Click "RESET FORM" button</li>
+			<li>Enter your value to input field</li>
+			<li>Click "RESET FORM" button again</li>
+		</ol>
+		<br>
+
+		<!-- Form where we can find input fields -->
+		<form is="iron-form" id="mainForm">
+			<label for="formInputField">Native HTML input field</label>
+			<input is="iron-input" id="formInputField" value="[[input_value]]"/>
+			<paper-input label="Paper input" value="[[input_value]]"></paper-input>
+			<button type="reset">Reset</button>
+		</form>
+
+		<!-- "input_value" value output -->
+		<br>
+		<div>Actual value: [[input_value]]</div>
+		<br>
+
+		<!-- Custom button to reset form via "reset()" method -->
+		<button type="button" on-tap="resetForm">RESET FORM</button>
+	</template>
+	<script>
+		Polymer({
+			is: 'app-form',
+			properties: {
+				input_value: {
+					type: String
+				}
+			},
+			resetForm: function () {
+				this.$.mainForm.reset();
+
+				var app = document.querySelector('main-app');
+				app.set('input_value', '');
+			}
+		});
+	</script>
+</dom-module>

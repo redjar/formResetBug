@@ -1,0 +1,31 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="app-form.html">
+
+<dom-module id="main-app">
+	<template>
+		<template is="dom-if" if="[[visible]]">
+			<app-form input_value="[[input_value]]"></app-form>
+		</template>
+
+		<button type="button" on-tap="setRandomValue">SET RANDOM VALUE</button>
+	</template>
+	<script>
+		Polymer({
+			is: 'main-app',
+			properties: {
+				input_value: {
+					type: String
+				},
+				visible: {
+					type: Boolean,
+					value: false
+				}
+			},
+			setRandomValue: function () {
+				this.set('input_value', Math.random() + '');
+
+				this.set('visible', true);
+			}
+		});
+	</script>
+</dom-module>
