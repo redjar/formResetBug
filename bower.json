@@ -1,6 +1,6 @@
 {
-  "name": "FormResetBug",
-  "description": "HTML Form reset bug reproduce element",
+  "name": "paperInputResetBug",
+  "description": "paper-input element reset bug",
   "main": "index.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",

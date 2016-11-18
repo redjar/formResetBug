@@ -3,28 +3,73 @@
 <link rel="import" href="../../bower_components/iron-form/iron-form.html">
 
 <dom-module id="app-form">
+	<style>
+		form {
+			border: 3px solid black;
+			border-radius: 6px;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+
+		form#postRendered {
+			border-color: dodgerblue;
+		}
+
+		form#preRendered {
+			border-color: #18b729;
+		}
+
+		.blue {
+			color: dodgerblue;
+		}
+
+		.green {
+			color: #18b729;
+		}
+	</style>
+
 	<template>
 		<!-- Description and instructions -->
-		<h2>Form reset bug reproduce element</h2>
+		<h2>paper-input value reset bug reproduce</h2>
 		<p>
-			This element reproduces HTML form <b>reset()</b> function bug. Please follow instruction to reproduce this
+			This element reproduces paper-input with iron-form <b>reset()</b> function bug. Please follow instruction to
+			reproduce this
 			bug.
 		</p>
 		<p>Instructions:</p>
 		<ol>
-			<li>Click "SET VALUE" button to set random number to input value</li>
-			<li>Click "RESET FORM" button</li>
-			<li>Enter your value to input field</li>
-			<li>Click "RESET FORM" button again</li>
+			<li>Click "SET RANDOM VALUE" button to set random float to input value</li>
+			<li>We can see two forms - one rendered when value was set (<span class="blue">blue border</span>), other
+				one was rendered instantly (<span class="green">green border</span>)
+			</li>
+			<li>Click each form "RESET" button</li>
+			<li>In <span class="blue">blue form</span> paper-input value was not reset</li>
+			<li>Click "SET RANDOM VALUE" again</li>
+			<li>In <span class="blue">blue form</span> paper-input value was set to first random value</li>
 		</ol>
 		<br>
 
-		<!-- Form where we can find input fields -->
-		<form is="iron-form" id="mainForm">
-			<label for="formInputField">Native HTML input field</label>
-			<input is="iron-input" id="formInputField" value="[[input_value]]"/>
+		<!-- Form redered only when value is changed -->
+		<template is="dom-if" if="[[visible]]">
+			<form is="iron-form" id="postRendered">
+				<p>This form was rendered ONLY after value was changed.</p>
+
+				<label for="input2">Native HTML input field</label>
+				<input is="iron-input" id="input2" value="[[input_value]]"/>
+				<paper-input label="Paper input" value="[[input_value]]"></paper-input>
+				<button type="reset">RESET</button>
+			</form>
+		</template>
+
+		<!-- Form rendered instantly -->
+		<form is="iron-form" id="preRendered">
+			<p>This form was rendered instantly.</p>
+
+			<label for="input1">Native HTML input field</label>
+			<input is="iron-input" id="input1" value="[[input_value]]"/>
+
 			<paper-input label="Paper input" value="[[input_value]]"></paper-input>
-			<button type="reset">Reset</button>
+			<button type="reset">RESET</button>
 		</form>
 
 		<!-- "input_value" value output -->
@@ -32,8 +77,7 @@
 		<div>Actual value: [[input_value]]</div>
 		<br>
 
-		<!-- Custom button to reset form via "reset()" method -->
-		<button type="button" on-tap="resetForm">RESET FORM</button>
+		<button type="button" on-tap="setRandomValue">SET RANDOM VALUE</button>
 	</template>
 	<script>
 		Polymer({
@@ -41,13 +85,16 @@
 			properties: {
 				input_value: {
 					type: String
+				},
+				visible: {
+					type: Boolean,
+					value: false
 				}
 			},
-			resetForm: function () {
-				this.$.mainForm.reset();
+			setRandomValue: function () {
+				this.set('input_value', Math.random() + '');
 
-				var app = document.querySelector('main-app');
-				app.set('input_value', '');
+				this.set('visible', true);
 			}
 		});
 	</script>
