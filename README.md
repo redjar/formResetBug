@@ -1,4 +1,14 @@
-# paper-input value reset bug reproduce
+## paper-input value reset bug reproduce
+
+### Install
+
+Requires **bower** package manager and **polymer-cli** to be installed. 
+Then in project main dir:
+
+- bower install
+- polymer serve
+
+### Reproduce
 
 This element reproduces paper-input with iron-form **reset()** function bug. Please follow instruction to reproduce this bug.
 
